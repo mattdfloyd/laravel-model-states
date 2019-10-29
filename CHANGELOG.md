@@ -2,6 +2,11 @@
 
 All notable changes to `state` will be documented in this file
 
+## 2.0.0 - ?
+
+- `HasStates::transitionableStates(string $fromClass, string $field)` now always requires the `$field` parameter
+- `State::transitionableStates()` now doesn't need the `$field` parameter anymore
+
 ## 1.5.0 - 2019-12-13
 
 - ❗️ `$finalState` in the `StateChanged` event is deprecated and will always be null. This is because of a fix for [bug #49](https://github.com/spatie/laravel-model-states/issues/49). This fix might have unforeseen effects if you're using `StateChanged`.
