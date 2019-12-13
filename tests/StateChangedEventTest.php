@@ -109,10 +109,10 @@ abstract class AbstractState extends State
 
 class StateA extends AbstractState
 {
-    public static $name = 1;
+    public static int $name = 1;
 }
 
 class StateB extends AbstractState
 {
-    public static $name = 2;
+    public static int $name = 2;
 }
