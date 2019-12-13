@@ -68,7 +68,7 @@ trait HasStates
                 /** @var null|\Spatie\ModelStates\State $state */
                 $state = $defaultState;
 
-                if(class_exists($stateClass)){
+                if (class_exists($stateClass)) {
                     $state = new $stateClass($model);
 
                     $state->setField($stateConfig->field);
@@ -116,9 +116,9 @@ trait HasStates
 
         $abstractStateClass = $stateConfig->stateClass;
 
-        $stateNames = collect((array) $states)->map(function ($state) use ($abstractStateClass) {
-            return $abstractStateClass::resolveStateName($state);
-        });
+        $stateNames = collect((array) $states)->map(
+            fn($state) => $abstractStateClass::resolveStateName($state)
+        );
 
         return $builder->whereIn($field, $stateNames);
     }
@@ -132,9 +132,9 @@ trait HasStates
             throw InvalidConfig::unknownState($field, $this);
         }
 
-        $stateNames = collect((array) $states)->map(function ($state) use ($stateConfig) {
-            return $stateConfig->stateClass::resolveStateName($state);
-        });
+        $stateNames = collect((array) $states)->map(
+            fn($state) => $stateConfig->stateClass::resolveStateName($state)
+        );
 
         return $builder->whereNotIn($field, $stateNames);
     }
@@ -203,12 +203,11 @@ trait HasStates
     public static function getStates(): Collection
     {
         return collect(static::getStateConfig())
-            ->map(function ($state) {
-                return $state->stateClass::all()->map(function ($stateClass) {
-                    /** @var \Spatie\ModelStates\State $stateClass */
-                    return $stateClass::getMorphClass();
-                });
-            });
+            ->map(
+                fn($state) => $state->stateClass::all()->map(
+                    fn($stateClass) => $stateClass::getMorphClass()
+                )
+            );
     }
 
     public static function getStatesFor(string $column): Collection
@@ -218,10 +217,9 @@ trait HasStates
 
     public static function getDefaultStates(): Collection
     {
-        return collect(static::getStateConfig())
-            ->map(function ($state) {
-                return $state->defaultStateClass;
-            });
+        return collect(static::getStateConfig())->map(
+            fn($state) => $state->defaultStateClass
+        );
     }
 
     public static function getDefaultStateFor(string $column): string
