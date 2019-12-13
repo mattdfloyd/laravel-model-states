@@ -63,7 +63,7 @@ class StateChangedEventTest extends TestCase
         Event::assertDispatched(
             StateChanged::class,
             function (StateChanged $event) {
-                $this->assertNull($event->finalState);
+                $this->assertInstanceOf(StateB::class, $event->finalState);
 
                 return true;
             }
